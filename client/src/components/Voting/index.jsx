@@ -11,6 +11,7 @@ import Session from "./Session";
 import VoteProposal from "./VoteProposal";
 import Vote from "./Vote"
 import WinnerProposal from "./WinnerProposal";
+import Proposals from "./Proposals"
 
 function Voting() {
   const { state: { artifact, contract }, userSettings: { currentSession, isOwner, isRegistered, hasVoted } } = useContext(VotingContext);
@@ -46,6 +47,11 @@ function Voting() {
       <OptionalComponent condition={currentSession === "3" && isRegistered && !hasVoted}>
         <VoteProposal />
       </OptionalComponent>
+      <div className='row'>
+        <div id="proposals" className='col s6'>
+        <Proposals/>
+        </div>
+      </div>
     </div>;
 
   return (

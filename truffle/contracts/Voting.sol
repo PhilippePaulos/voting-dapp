@@ -43,7 +43,7 @@ contract Voting is Ownable {
 
     constructor(string memory _name, string memory _description) {
         sessionName = _name;
-        sessionDescription = _description;
+        description = _description;
     }
 
     modifier onlyVoters() {
