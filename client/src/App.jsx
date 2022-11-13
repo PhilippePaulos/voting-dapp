@@ -1,21 +1,23 @@
-import Intro from "./components/Intro";
-import Voting from "./components/Voting";
-import { EthProvider } from "./contexts/EthContext";
+import { ThemeProvider } from "@emotion/react";
+import { CssBaseline } from '@mui/material/';
 import "./App.css";
+import Voting from "./components/Voting";
+import Navbar from "./components/Voting/Navbar";
+import { theme } from './components/Voting/theme';
+import { EthProvider } from "./contexts/EthContext";
 import VotingProvider from "./contexts/VotingContext/VotingProvider";
 
 function App() {
   return (
-    <EthProvider>
-      <div id="App" >
-        <div className="container">
-          {/* <Intro /> */}
-          <VotingProvider>
-            <Voting />
-          </VotingProvider>
-        </div>
-      </div>
-    </EthProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline/>
+      <EthProvider>
+        <Navbar />
+        <VotingProvider>
+          <Voting/>
+        </VotingProvider>
+      </EthProvider>
+    </ThemeProvider>
   );
 }
 

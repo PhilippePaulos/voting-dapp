@@ -9,62 +9,83 @@ import SearchProposal from "./SearchProposal";
 import SearchVoter from "./SearchVoter";
 import Session from "./Session";
 import VoteProposal from "./VoteProposal";
-import Vote from "./Vote"
+import Vote from "./Vote";
 import WinnerProposal from "./WinnerProposal";
-import Proposals from "./Proposals"
+import Proposals from "./Proposals";
+import Voters from "./Voters";
+import { Box, createTheme, Grid, styled, Typography } from "@mui/material";
+import { theme } from "./theme";
+import RoundedGrid from "./RoundedGrid";
+import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 
-function Voting() {
-  const { state: { artifact, contract }, userSettings: { currentSession, isOwner, isRegistered, hasVoted } } = useContext(VotingContext);
-  const voting =
-    <div id="voting">
-      <div id="summary" className="row">
-        <div className="col s4 box">
-          <Session />
-        </div>
-        <div className="col s4 box">
-          <OptionalComponent condition={hasVoted}>
-            <Vote />
-          </OptionalComponent>
-        </div>
-        <div className="col s4 box">
-          <OptionalComponent condition={currentSession === "5" && isRegistered}>
-            <WinnerProposal />
-          </OptionalComponent>
-        </div>
-      </div>
-      <OptionalComponent condition={currentSession === "0" && isOwner}>
-        <Registration />
-      </OptionalComponent>
-      <OptionalComponent condition={currentSession === "1" && isRegistered}>
-        <Propose />
-      </OptionalComponent>
-      <OptionalComponent condition={currentSession >= "1" && isRegistered}>
-        <SearchProposal />
-      </OptionalComponent>
-      <OptionalComponent condition={isRegistered}>
-        <SearchVoter />
-      </OptionalComponent>
-      <OptionalComponent condition={currentSession === "3" && isRegistered && !hasVoted}>
-        <VoteProposal />
-      </OptionalComponent>
-      <div className='row'>
-        <div id="proposals" className='col s6'>
-        <Proposals/>
-        </div>
-      </div>
-    </div>;
-
+const Voting = () => {
   return (
-    <>
-      <div className="demo">
-        {
-          !artifact ? <NoticeNoArtifact /> :
-            !contract ? <NoticeWrongNetwork /> :
-              voting
-        }
-      </div>
-    </>
-  );
+    <Grid container m={3} sx={{mx: "auto", maxWidth: "1200px"}}>
+        <Grid item xs={8}>
+            <Typography variant="h3" fontSize={36} fontWeight={600}>Who's the best guitarist of all time ?</Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Session/>
+        </Grid>
+
+    </Grid>
+  )
 }
+// function Voting() {
+//   const { state: { artifact, contract }, userSettings: { currentSession, isOwner, isRegistered, hasVoted } } = useContext(VotingContext);
+//   const voting =
+//     <div id="voting">
+//       <div id="summary" className="row">
+//         <div className="col s4 box">
+//           <Session />
+//         </div>
+//         <div className="col s4 box">
+//           <OptionalComponent condition={hasVoted}>
+//             <Vote />
+//           </OptionalComponent>
+//         </div>
+//         <div className="col s4 box">
+//           <OptionalComponent condition={currentSession === "5" && isRegistered}>
+//             <WinnerProposal />
+//           </OptionalComponent>
+//         </div>
+//       </div>
+//       <OptionalComponent condition={currentSession === "0" && isOwner}>
+//         <Registration />
+//       </OptionalComponent>
+//       <OptionalComponent condition={currentSession === "1" && isRegistered}>
+//         <Propose />
+//       </OptionalComponent>
+//       <OptionalComponent condition={currentSession >= "1" && isRegistered}>
+//         <SearchProposal />
+//       </OptionalComponent>
+//       <OptionalComponent condition={isRegistered}>
+//         <SearchVoter />
+//       </OptionalComponent>
+//       <OptionalComponent condition={currentSession === "3" && isRegistered && !hasVoted}>
+//         <VoteProposal />
+//       </OptionalComponent>
+//       <div className="row">
+//         <div className="col s6">
+//           <Voters />
+//         </div>
+//         <div className="col s6">
+//           <Proposals />
+//         </div>
+//       </div>
+//     </div>;
+
+//   return (
+//     <>
+//       <div className="demo">
+//         {
+//           !artifact ? <NoticeNoArtifact /> :
+//             !contract ? <NoticeWrongNetwork /> :
+//               voting
+//         }
+//       </div>
+//     </>
+//   );
+// }
 
 export default Voting;
