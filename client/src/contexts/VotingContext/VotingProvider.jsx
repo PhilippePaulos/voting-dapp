@@ -4,6 +4,7 @@ import VotingContext from "./VotingContext";
 
 function VotingProvider({ children }) {
     const { state, state: { contract, accounts }, dispatch } = useEth();
+    
     const [isOwner, setIsOwner] = useState(false);
     const [isRegistered, setIsRegistered] = useState(false);
     const [hasVoted, setHasVoted] = useState(false);
@@ -42,7 +43,6 @@ function VotingProvider({ children }) {
 
     const fetchCurrentSession = useCallback(async () => {
         const session = await contract.methods.workflowStatus().call();
-        console.log(await contract.methods.sessionDescription().call());
         setCurrentSession(session);
     }, [contract]);
 

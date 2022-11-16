@@ -30,7 +30,7 @@ contract Voting is Ownable {
     }
 
     WorkflowStatus public workflowStatus;
-    Proposal[] proposalsArray;
+    Proposal[1000] proposalsArray;
     mapping(address => Voter) voters;
 
     event VoterRegistered(address voterAddress);
@@ -39,12 +39,7 @@ contract Voting is Ownable {
         WorkflowStatus newStatus
     );
     event ProposalRegistered(uint256 proposalId);
-    event Voted(address voter, uint256 proposalId);
-
-    constructor(string memory _name, string memory _description) {
-        sessionName = _name;
-        sessionDescription = _description;
-    }
+    event Voted(address voter, uint256 proposalId); 
 
     modifier onlyVoters() {
         require(voters[msg.sender].isRegistered, "You're not a voter");
@@ -101,7 +96,7 @@ contract Voting is Ownable {
 
         Proposal memory proposal;
         proposal.description = _desc;
-        proposalsArray.push(proposal);
+        proposalsArray[proposalsArray.length]= proposal;
         emit ProposalRegistered(proposalsArray.length - 1);
     }
 
@@ -133,7 +128,7 @@ contract Voting is Ownable {
 
         Proposal memory proposal;
         proposal.description = "GENESIS";
-        proposalsArray.push(proposal);
+        proposalsArray[0] = proposal;
 
         emit WorkflowStatusChange(
             WorkflowStatus.RegisteringVoters,
