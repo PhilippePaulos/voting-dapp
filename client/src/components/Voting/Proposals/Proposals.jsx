@@ -41,7 +41,7 @@ function VoteTableCell(props) {
 }
 
 function Proposals() {
-    const { state: { contract, accounts }, userSettings: { currentSession, hasVoted } } = useContext(VotingContext);
+    const { state: { contract, accounts }, userSettings: { currentSession, hasVoted, isRegistered } } = useContext(VotingContext);
     const [proposals, setProposals] = useState([]);
     const [openProposalModal, setOpenProposalModal] = useState(false);
     const [openVoteModal, setOpenVoteModal] = useState(false);
@@ -105,7 +105,7 @@ function Proposals() {
                 <Box className="boxHeader">
                     <Typography variant="h6">Proposals</Typography>
                     {
-                        currentSession !== Sessions.ProposalsRegistrationStarted ? null : addProposalIcon
+                        currentSession !== Sessions.ProposalsRegistrationStarted || !isRegistered ? null : addProposalIcon
                     }
                 </Box>
                 <Paper sx={{ width: '100%', backgroundColor: theme.palette.background.grid, marginBottom: "10px", boxShadow: "none" }}>

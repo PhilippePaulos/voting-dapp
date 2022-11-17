@@ -1,9 +1,10 @@
+import { Typography } from "@mui/material";
+
 function NoticeNoArtifact() {
   return (
-    <p>
+    <Typography p={10} variant="h4">
       ⚠️ Cannot find <span className="code">Voting</span> contract artifact.
-      Please complete the above preparation first, then restart the react dev server.
-    </p>
+    </Typography>
   );
 }
 
