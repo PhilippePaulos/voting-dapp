@@ -40,7 +40,7 @@ networks: {
 
 ## Tests
 #### Gas Reporter
-![alt test](https://github.com/PhilippePaulos/voting-dapp/blob/main/test/gas-reporter.PNG)
+![alt test](https://github.com/PhilippePaulos/voting-dapp/blob/main/truffle/test/gas-reporter.PNG)
 
 #### Coverage
-![alt test](https://github.com/PhilippePaulos/voting-dapp/blob/main/test/coverage.PNG)
+![alt test](https://github.com/PhilippePaulos/voting-dapp/blob/main/truffle/test/coverage.PNG)
