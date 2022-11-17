@@ -18,7 +18,7 @@ The initial Voting contract has been updated in order to fix a potential issue: 
 * Material UI
 
 ## Contract address
-The contract is deployed in the Goerli testnet at :
+The contract is deployed in the Goerli testnet at 0x345E9Be0dC5c1bAC3400a5582b36217380d4ea3f
 
 ## Local deployment
 
