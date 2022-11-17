@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { SessionCodes } from "../../components/Voting/common";
 import useEth from "../EthContext/useEth";
 import VotingContext from "./VotingContext";
 
@@ -43,7 +44,7 @@ function VotingProvider({ children }) {
 
     const fetchCurrentSession = useCallback(async () => {
         const session = await contract.methods.workflowStatus().call();
-        setCurrentSession(session);
+        setCurrentSession(SessionCodes[session]);
     }, [contract]);
 
     useEffect(() => {

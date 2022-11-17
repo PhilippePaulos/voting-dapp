@@ -1,15 +1,46 @@
-# React client
+# Voting DApp project
 
-This project is bootstraped with [Create React App](https://create-react-app.dev). It is unopinionated with only `web3.js` as an added dependency, so nothing stands in your way.
+## Media
 
-## Getting started
+## General Information
+This project has been done to practice DApp development. The smart contract used is a simple voting contract which allows the owner to manage a voting session. The owner can register addresses and trigger next sessions until the final tally session. The registered addresses can add proposals to the vote session and then vote for one proposal, there is only one winner.
 
-Run `npm start` to start the dev server.
+## Contract Improvements
+The initial Voting contract has been updated in order to fix a potential issue: the proposal amount is now limited to one hundred instead of an unlimited size that could lead to a DOS memory attack.
 
-See all [available scripts](https://create-react-app.dev/docs/available-scripts).
+## Technologies Used
+* Solidity
+* Javascript
+* Truffle
+* React
+* Web3
+* Material UI
 
-## Note on `react-scripts` version
+## Contract address
+The contract is deployed in the Goerli testnet at :
 
-The installed version of `react-scripts` is 4.x instead of the latest 5.x, which uses Webpack 5. This is because Webpack 5 no longer auto-polyfills Node.js core modules, which `web3.js` depends on.
+## Local deployment
+You can deploy the contract in your local environment using the following comands:
+```sh 
+cd truffle
+npm run migrate --network=development
+```
 
-If you don't want to use `react-scripts` at 4.x, alternative solutions include [`eject`](https://create-react-app.dev/docs/available-scripts/#npm-run-eject) and [`react-app-rewired`](https://github.com/timarney/react-app-rewired) (See [instruction](https://github.com/ChainSafe/web3.js#web3-and-create-react-app)).
+Make sure that you have a local blockchain running in your machine and feel free to update the truffle-config.js file in order to match your local configuration:
+```js
+networks: {
+    development: {
+      host: "127.0.0.1",
+      port: 7545,
+      network_id: "*",
+    },
+    ...
+}
+```
+
+## Tests
+#### Gas Reporter
+![alt test](https://github.com/PhilippePaulos/voting-dapp/blob/main/test/gas-reporter.PNG)
+
+#### Coverage
+![alt test](https://github.com/PhilippePaulos/voting-dapp/blob/main/test/coverage.PNG)

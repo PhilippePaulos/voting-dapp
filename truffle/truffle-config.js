@@ -5,8 +5,6 @@ require('dotenv').config();
 const mnemonic = process.env.MNEMONIC;
 const infuraProjectId = process.env.INFURA_PROJECT_ID;
 
-console.log(mnemonic)
-console.log(infuraProjectId)
 module.exports = {
 
   contracts_build_directory: "../client/src/contracts",

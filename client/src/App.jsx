@@ -1,11 +1,11 @@
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from '@mui/material/';
 import "./App.css";
-import Voting from "./components/Voting";
-import Navbar from "./components/Navbar/index"
+
 import { theme } from './components/theme/theme.js';
 import { EthProvider } from "./contexts/EthContext";
 import VotingProvider from "./contexts/VotingContext/VotingProvider";
+import VotingApp from "./components/VotingApp";
 
 function App() {
   return (
@@ -13,8 +13,7 @@ function App() {
       <CssBaseline/>
       <EthProvider>
         <VotingProvider>
-          <Navbar />
-          <Voting/>
+          <VotingApp/>
         </VotingProvider>
       </EthProvider>
     </ThemeProvider>

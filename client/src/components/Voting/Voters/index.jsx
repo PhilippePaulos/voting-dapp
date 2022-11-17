@@ -6,7 +6,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import VotingContext from "../../../contexts/VotingContext/VotingContext";
 import AddressAvatar from '../../AddressAvatar';
 import { AddressBox, RoundedGrid, TypographyPointer } from '../../styles';
-import { addressPattern } from "../constants";
+import { addressPattern, Sessions } from "../common";
 import RegisterModal from '../RegisterModal';
 import VotersDialog from './VoterPopover';
 
@@ -96,11 +96,10 @@ function Voters() {
         }
         handleCloseRegisterModal();
         fetchVoters();
-
     }
 
     const addVoterIcon =
-        <AddCircleIcon color='text' fontSize='large' onClick={e => setOpen(true)} />
+        <AddCircleIcon color='text' fontSize='medium' onClick={e => setOpen(true)} />
 
     return (
         <>
@@ -108,7 +107,7 @@ function Voters() {
                 <Box className='boxHeader'>
                     <Typography variant="h6">Voters</Typography>
                     {
-                        !isOwner || currentSession !== '0' ? null : addVoterIcon
+                        !isOwner || currentSession !== Sessions.RegisteringVoters ? null : addVoterIcon
                     }
                 </Box>
                 <Box className='content'>
@@ -128,12 +127,12 @@ function Voters() {
                                 </AddressAvatar>
                                 <TypographyPointer
                                     variant='p'
-                                    fontSize={14}
+                                    fontSize={13}
                                     fontWeight="bold"
                                     onClick={e => onMouseEnterVoter(e, row.address)}
-                                    // onMouseOut={e => handleVoterPopoverClose(e)}
+                                    onMouseOut={e => handleVoterPopoverClose(e)}
                                     >
-                                    {row.address.substring(0, 6) + "..." + row.address.substring(38, row.address.length)}
+                                        {row.address}
                                 </TypographyPointer>
                             </AddressBox>
                         )

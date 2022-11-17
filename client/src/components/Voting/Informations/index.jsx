@@ -3,18 +3,19 @@ import { Box, Typography } from "@mui/material";
 import { useCallback, useContext, useEffect, useState } from "react";
 import VotingContext from "../../../contexts/VotingContext/VotingContext";
 import { RoundedGrid } from "../../styles";
-import { SESSIONS } from "../constants";
+import { Sessions } from "../common";
 import SessionModal from '../SessionsModal';
 
 
 const Informations = () => {
     const { state: { contract, accounts },
-        userSettings: { isOwner, currentSession, fetchCurrentSession } } = useContext(VotingContext);
+        userSettings: { isOwner, isRegistered, currentSession, fetchCurrentSession } } = useContext(VotingContext);
     const [open, setOpen] = useState(false);
     const [winner, setWinner] = useState({});
 
     const fetchWinner = useCallback(async () => {
         const winner = await contract.methods.winningProposalID().call();
+        console.log(winner)
         const proposal = await contract.methods.getOneProposal(winner).call({ from: accounts[0] });
         setWinner({ description: proposal.description, voteCount: proposal.voteCount });
     }, [contract, accounts]);
@@ -25,9 +26,11 @@ const Informations = () => {
 
     useEffect(() => {
         if (contract != null) {
-            fetchWinner();
+            if(currentSession === Sessions.VotesTallied && isRegistered){
+                fetchWinner();
+            }
         }
-    }, [contract, fetchWinner]);
+    }, [contract, currentSession, isRegistered, fetchWinner]);
 
     const nextSession = async () => {
         switch (currentSession) {
@@ -59,7 +62,7 @@ const Informations = () => {
     };
 
     const nextSessionIcon =
-        <ArrowCircleRightOutlinedIcon color="text" fontSize="large" onClick={e => setOpen(true)} />
+        <ArrowCircleRightOutlinedIcon color="text" fontSize="medium" onClick={e => setOpen(true)} />
 
     return (
         <>
@@ -67,15 +70,15 @@ const Informations = () => {
                 <Box className="boxHeader">
                     <Typography variant="h6">Informations</Typography>
                     {
-                        !isOwner || currentSession === "5" ? null : nextSessionIcon
+                        !isOwner || currentSession === Sessions.VotesTallied ? null : nextSessionIcon
                     }
                 </Box>
                 <Box className="content">
                     <Box className="line">
                         <Typography variant="b">Current session</Typography>
-                        <Typography variant="p">{SESSIONS[currentSession]}</Typography>
+                        <Typography variant="p">{currentSession}</Typography>
                     </Box>
-                    {currentSession === "5" ?
+                    {currentSession === Sessions.VotesTallied ?
                         <Box className="line">
                             <Typography variant="b">Winning proposal</Typography>
                             <Typography variant="p">{winner.description}</Typography>

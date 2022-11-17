@@ -1,16 +1,22 @@
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import { Box, Popover, Typography } from '@mui/material';
+import { Box, Popover, styled, Typography } from '@mui/material';
 import AddressAvatar from '../../AddressAvatar';
 import { theme } from '../../theme/theme';
+
+const PopoverStyled = styled(Popover)({
+    ".MuiPaper-root": {
+        backgroundColor: "inherit"
+    }
+})
 
 function VoterPopover(props) {
 
     const { open, voter, anchorEl, handleClose } = props;
 
     return (
-        <Popover
+        <PopoverStyled            
             id="voter-popover"
             sx={{
                 pointerEvents: 'none'
@@ -28,45 +34,42 @@ function VoterPopover(props) {
                 horizontal: 'left',
               }}
             >
-            <Box p={3} sx={{
-                backgroundColor: theme.palette.primary.main,
-                border: "1px solid",
-                borderColor: theme.palette.border.main,
+            <Box p={1} sx={{
+                backgroundColor: theme.palette.background.pop
             }}>
                 <Box sx={{
                     display: "flex",
-                    justifyContent: "space-between",
                     alignItems: "center",
                     gap: "5px",
-                    pb: "10px"
+                    pb: "5px"
                 }}>
 
                     <AddressAvatar address={voter.address}>
                         <PersonOutlineIcon />
                     </AddressAvatar>
-                    <Typography variant="p">
+                    <Typography variant="p" fontSize={13} fontWeight="bold">
                         {voter.address}
                     </Typography>
                 </Box>
                 <Box sx={{
                     display: "flex",
                     alignItems: "center",
-                    gap: "5px"
+                    gap: "5px",
                 }}>
                     {
                         voter.hasVoted ?
                             <>
-                                <CheckIcon color="success" /><Typography variant="p">Voted for <strong>{voter.proposalDescription}</strong></Typography>
+                                <CheckIcon color="success" /><Typography variant="p" fontSize={13}>Voted for <strong>{voter.proposalDescription}</strong></Typography>
                             </>
                             :
                             <>
-                                <ClearIcon color="error" /><Typography variant="p">Not voted yet</Typography>
+                                <ClearIcon color="error" /><Typography variant="p" fontSize={13}>Not voted yet</Typography>
                             </>
                     }
                 </Box>
             </Box>
 
-        </Popover>
+        </PopoverStyled>
     )
 }
 

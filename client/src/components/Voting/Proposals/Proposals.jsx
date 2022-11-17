@@ -1,5 +1,5 @@
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { Box, List, ListItem, styled, Typography } from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,11 +7,11 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { fontWeight } from '@mui/system';
 import { useCallback, useContext, useEffect, useState } from "react";
 import VotingContext from "../../../contexts/VotingContext/VotingContext";
 import { RoundedGrid } from "../../styles";
 import { theme } from '../../theme/theme';
+import { Sessions } from '../common';
 import AddProposalModal from './AddProposalModal';
 import VoteProposalModal from './VoteProposalModal';
 
@@ -25,14 +25,12 @@ function VoteTableCell(props) {
 
     const { children, column, handleClick, condition, row } = props;
     const conditionalOnClick = condition ? handleClick : () => undefined;
+
     return (
         <TableCell
             style={
                 {
-                    minWidth: column.minWidth,
-                    cursor: condition ? "pointer" : "default",
-                    borderColor: theme.palette.border.main,
-                    fontSize: "14px"
+                    cursor: condition ? "pointer" : "default"
                 }}
             key={column.id}
             align={column.align}
@@ -43,7 +41,7 @@ function VoteTableCell(props) {
 }
 
 function Proposals() {
-    const { state: { contract, accounts }, userSettings: { isOwner, currentSession, hasVoted } } = useContext(VotingContext);
+    const { state: { contract, accounts }, userSettings: { currentSession, hasVoted } } = useContext(VotingContext);
     const [proposals, setProposals] = useState([]);
     const [openProposalModal, setOpenProposalModal] = useState(false);
     const [openVoteModal, setOpenVoteModal] = useState(false);
@@ -95,19 +93,22 @@ function Proposals() {
 
 
     const addProposalIcon =
-        <AddCircleIcon color="text" fontSize="large" onClick={e => setOpenProposalModal(true)} />
+        <AddCircleIcon
+            color="text"
+            fontSize="medium"
+            onClick={e => setOpenProposalModal(true)}
+        />
 
     return (
         <>
-
             <RoundedGrid>
                 <Box className="boxHeader">
                     <Typography variant="h6">Proposals</Typography>
                     {
-                        !isOwner || currentSession !== "1" ? null : addProposalIcon
+                        currentSession !== Sessions.ProposalsRegistrationStarted ? null : addProposalIcon
                     }
                 </Box>
-                <Paper sx={{ width: '100%', backgroundColor: theme.palette.primary.main, marginBottom: "10px", boxShadow: "none" }}>
+                <Paper sx={{ width: '100%', backgroundColor: theme.palette.background.grid, marginBottom: "10px", boxShadow: "none" }}>
                     <TableContainer sx={{ maxHeight: 600 }}>
                         <Table stickyHeader aria-label="sticky table" >
                             <TableHead>
@@ -116,12 +117,7 @@ function Proposals() {
                                         <TableCell
                                             key={column.id}
                                             align={column.align}
-                                            style={{
-                                                minWidth: column.minWidth, fontSize: "16px",
-                                                borderColor: theme.palette.border.main,
-                                                color: theme.palette.secondary.main,
-                                                fontWeight: "bold"
-                                            }}
+                                            sx={{ backgroundColor: theme.palette.background.grid }}
                                         >
                                             {column.label}
                                         </TableCell>
@@ -137,7 +133,7 @@ function Proposals() {
                                                 role="checkbox"
                                                 tabIndex={-1}
                                                 key={row.proposalId}
-                                                sx={{ '&:hover': { background: currentSession === "3" ? theme.palette.cell.hover : "inherit" } }}>
+                                                sx={{ '&:hover': { background: currentSession === Sessions.VotingSessionStarted ? theme.palette.background.pop : "inherit" } }}>
                                                 {columns.map((column) => {
                                                     const value = row[column.id];
                                                     return (
@@ -145,7 +141,7 @@ function Proposals() {
                                                             key={column.id}
                                                             column={column}
                                                             handleClick={handleProposalClick}
-                                                            condition={!hasVoted && currentSession === "3"}
+                                                            condition={!hasVoted && currentSession === Sessions.VotingSessionStarted}
                                                             row={row}>
                                                             {column.format && typeof value === 'number'
                                                                 ? column.format(value)
@@ -169,7 +165,8 @@ function Proposals() {
             <VoteProposalModal
                 open={openVoteModal}
                 setOpen={setOpenVoteModal}
-                proposal={proposalVote} />
+                proposal={proposalVote}
+                fetchProposals={fetchProposals} />
         </>
     )
 }

@@ -15,15 +15,15 @@ const SessionModal = (props) => {
                 borderRadius={2}
                 >
                 <Typography
-                    variant='h6'
-                    color='primary'
-                    fontWeight="bold"
-                    textAlign='center'
-                    p={1.5}>Go to the next session
+                    variant="h6"
+                    textAlign="center"
+                    color="primary"
+                    p={1.5}>Go to the next session ?
                 </Typography>
                 <form noValidate onSubmit={handleSubmit}>
-                    <Box p={2} sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                        <Button onClick={handleSubmit} color="action" variant="contained" sx={{ fontWeight: "bold" }}>Next session</Button>
+                    <Box p={2} sx={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly", gap: "10px" }}>
+                        <Button onClick={handleSubmit} color="action" variant="contained" sx={{ fontWeight: "bold" }}>Yes</Button>
+                        <Button onClick={handleSubmit} color="action" variant="contained" sx={{ fontWeight: "bold" }}>No</Button>
                     </Box>
                 </form>
             </Box>

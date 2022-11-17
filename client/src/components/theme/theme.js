@@ -3,7 +3,9 @@ import { createTheme } from "@mui/material";
 export const theme = createTheme({
     palette: {
         background: {
-            default: "#211f24"
+            default: "#09162E",
+            grid: "rgb(14, 28, 55)",
+            pop:  "rgb(32, 46, 73)"
         },
         text: {
             primary: "#ffffff",
@@ -15,7 +17,7 @@ export const theme = createTheme({
             main: "#a2a8ae",
         },
         action: {
-            main: "#384aff"
+            main: "#0b0d22"
         },
         border: {
             main: "#6f6f6f"
@@ -27,7 +29,7 @@ export const theme = createTheme({
         }
     },
     typography: {
-        fontFamily: "Calibre,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji",
+        fontFamily: "Inter, Arial, sans-serif",
         allVariants: {
             color: "white",
         },
@@ -38,7 +40,6 @@ export const theme = createTheme({
             background: "#000000",
         },
         b: {
-            fontWeight: "bold",
             fontSize: "17px"
         },
         p: {

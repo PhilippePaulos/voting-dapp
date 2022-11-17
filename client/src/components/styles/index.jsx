@@ -1,17 +1,14 @@
-import { Box, Grid, Modal, styled, TableRow, Typography } from "@mui/material";
+import { Box, Grid, Modal, styled, Typography } from "@mui/material";
 import { theme } from "../theme/theme";
 
 const RoundedGrid = styled(Grid)({
-    border: "solid 1px",
-    borderColor: theme.palette.border.main,
+    backgroundColor: theme.palette.background.grid,
     borderRadius: ".75rem",
     "& .MuiTypography-h4": {
         fontWeight: "bold"
     },
     "& .boxHeader": {
-        borderBottom: "solid 1px",
-        borderColor: theme.palette.border.main,
-        padding: "15px",
+        padding: "10px 15px 10px 15px",
         display: "flex",
         justifyContent: "space-between",
         fontWeight: "bold",
@@ -19,7 +16,7 @@ const RoundedGrid = styled(Grid)({
     "& .content .line": {
         display: "flex",
         justifyContent: "space-between",
-        padding: "3px 10px 10px 10px",
+        padding: "10px 15px 10px 15px",
         borderColor: theme.palette.border.main,
     },
     "& .MuiTypography-b": {
@@ -49,3 +46,4 @@ const CenteredModal = styled(Modal)({
 })
 
 export { RoundedGrid, AddressBox, TypographyPointer, CenteredModal };
+
