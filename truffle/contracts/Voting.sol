@@ -4,9 +4,6 @@ pragma solidity 0.8.17;
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Voting is Ownable {
-
-    string public sessionName;
-    string public sessionDescription;
     uint256 public winningProposalID;
 
     struct Voter {
@@ -30,7 +27,8 @@ contract Voting is Ownable {
     }
 
     WorkflowStatus public workflowStatus;
-    Proposal[1000] proposalsArray;
+    Proposal[100] proposalsArray;
+    uint8 numProposals;
     mapping(address => Voter) voters;
 
     event VoterRegistered(address voterAddress);
@@ -39,7 +37,7 @@ contract Voting is Ownable {
         WorkflowStatus newStatus
     );
     event ProposalRegistered(uint256 proposalId);
-    event Voted(address voter, uint256 proposalId); 
+    event Voted(address voter, uint256 proposalId);
 
     modifier onlyVoters() {
         require(voters[msg.sender].isRegistered, "You're not a voter");
@@ -96,8 +94,9 @@ contract Voting is Ownable {
 
         Proposal memory proposal;
         proposal.description = _desc;
-        proposalsArray[proposalsArray.length]= proposal;
-        emit ProposalRegistered(proposalsArray.length - 1);
+        proposalsArray[numProposals] = proposal;
+        numProposals += 1;
+        emit ProposalRegistered(numProposals - 1);
     }
 
     // ::::::::::::: VOTE ::::::::::::: //
@@ -108,7 +107,7 @@ contract Voting is Ownable {
             "Voting session havent started yet"
         );
         require(voters[msg.sender].hasVoted != true, "You have already voted");
-        require(_id < proposalsArray.length, "Proposal not found"); // pas obligé, et pas besoin du >0 car uint
+        require(_id < numProposals, "Proposal not found");
 
         voters[msg.sender].votedProposalId = _id;
         voters[msg.sender].hasVoted = true;
@@ -128,6 +127,7 @@ contract Voting is Ownable {
 
         Proposal memory proposal;
         proposal.description = "GENESIS";
+        numProposals += 1;
         proposalsArray[0] = proposal;
 
         emit WorkflowStatusChange(
@@ -178,11 +178,8 @@ contract Voting is Ownable {
             "Current status is not voting session ended"
         );
         uint256 _winningProposalId;
-        for (uint256 p = 0; p < proposalsArray.length; p++) {
-            if (
-                proposalsArray[p].voteCount >
-                proposalsArray[_winningProposalId].voteCount
-            ) {
+        for (uint256 p = 0; p < numProposals; p++) {
+            if (proposalsArray[p].voteCount > proposalsArray[_winningProposalId].voteCount) {
                 _winningProposalId = p;
             }
         }

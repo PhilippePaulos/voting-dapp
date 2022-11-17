@@ -190,6 +190,23 @@ contract("Voting - addProposal", accounts => {
             await expectRevert(this.voting.addProposal("proposal1", { from: accounts[1] }), "Proposals are not allowed yet");
         }
     });
+
+    it("fails if proposed more than 99 proposals", async function () {
+        await this.voting.addVoter(accounts[1], { from: this.owner });
+        await this.voting.startProposalsRegistering({ from: this.owner });
+
+        const addProposals = (id) => {
+            return this.voting.addProposal(`proposal${id}`, { from: accounts[1] });
+        }
+        let ids = [];
+        for (var i = 0; i < 99; i++) {
+            ids.push(i)
+        }
+        const promises = ids.map((id) => addProposals(id));
+        await Promise.all(promises);
+        await expectRevert(this.voting.addProposal("proposal1", { from: accounts[1] }), "revert");
+    });
+
 });
 
 
@@ -270,8 +287,6 @@ contract("Voting - setVote", accounts => {
             await expectRevert(this.voting.setVote(1, { from: accounts[1] }), "Voting session havent started yet");
         }
     });
-
-
 });
 
 
