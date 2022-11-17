@@ -5,6 +5,7 @@ import { Box, Typography } from '@mui/material';
 import { useCallback, useContext, useEffect, useState } from "react";
 import VotingContext from "../../../contexts/VotingContext/VotingContext";
 import AddressAvatar from '../../AddressAvatar';
+import CircularIndeterminate from '../../CircularIndeterminate';
 import { AddressBox, RoundedGrid, TypographyPointer } from '../../styles';
 import { addressPattern, Sessions } from "../common";
 import RegisterModal from '../RegisterModal';
@@ -19,6 +20,7 @@ function Voters() {
     const [selectedVoter, setSelectedVoter] = useState('');
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const openPopoverVoter = Boolean(anchorEl);
 
@@ -90,12 +92,15 @@ function Voters() {
         event.preventDefault();
         if (addressPattern.test(registerVoter)) {
             setAddressError(false);
+            setLoading(true);
             await contract.methods.addVoter(registerVoter).send({ from: accounts[0] });
         } else {
             setAddressError(true);
         }
-        handleCloseRegisterModal();
         fetchVoters();
+        handleCloseRegisterModal();
+        setLoading(false);
+        handleCloseRegisterModal();
     }
 
     const addVoterIcon =
@@ -152,6 +157,8 @@ function Voters() {
                 handleClose={handleVoterPopoverClose}
                 voter={selectedVoter}
                 anchorEl={anchorEl} />
+                
+            <CircularIndeterminate loading={loading}/>
         </>
     );
 }

@@ -2,6 +2,7 @@ import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOu
 import { Box, Typography } from "@mui/material";
 import { useCallback, useContext, useEffect, useState } from "react";
 import VotingContext from "../../../contexts/VotingContext/VotingContext";
+import CircularIndeterminate from '../../CircularIndeterminate';
 import { RoundedGrid } from "../../styles";
 import { Sessions } from "../common";
 import SessionModal from '../SessionsModal';
@@ -12,6 +13,7 @@ const Informations = () => {
         userSettings: { isOwner, isRegistered, currentSession, fetchCurrentSession } } = useContext(VotingContext);
     const [open, setOpen] = useState(false);
     const [winner, setWinner] = useState({});
+    const [loading, setLoading] = useState(false);
 
     const fetchWinner = useCallback(async () => {
         const winner = await contract.methods.winningProposalID().call();
@@ -33,32 +35,30 @@ const Informations = () => {
     }, [contract, currentSession, isRegistered, fetchWinner]);
 
     const nextSession = async () => {
+        setLoading(true);
         switch (currentSession) {
             case Sessions.RegisteringVoters:
                 await contract.methods.startProposalsRegistering().send({ from: accounts[0] })
-                setOpen(false)
                 break
             case Sessions.ProposalsRegistrationStarted:
                 await contract.methods.endProposalsRegistering().send({ from: accounts[0] })
-                setOpen(false)
                 break
             case Sessions.ProposalsRegistrationEnded:
                 await contract.methods.startVotingSession().send({ from: accounts[0] })
-                setOpen(false)
                 break
             case Sessions.VotingSessionStarted:
                 await contract.methods.endVotingSession().send({ from: accounts[0] })
-                setOpen(false)
                 break;
             case Sessions.VotingSessionEnded:
                 await contract.methods.tallyVotes().send({ from: accounts[0] })
-                setOpen(false)
                 break;
             default:
                 console.error("Session not recognized: ", currentSession)
-
         }
         fetchCurrentSession();
+        setLoading(false);
+        setOpen(false);
+
     };
 
     const nextSessionIcon =
@@ -90,6 +90,7 @@ const Informations = () => {
                 open={open}
                 setOpen={setOpen}
                 handleSubmit={handleSubmit} />
+            <CircularIndeterminate loading={loading}/>
         </>
     )
 }

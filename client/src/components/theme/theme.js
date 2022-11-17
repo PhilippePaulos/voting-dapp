@@ -26,7 +26,7 @@ export const theme = createTheme({
             main: "#211f24",
             secondary: "#384aff91",
             hover: "#393939"
-        }
+        },
     },
     typography: {
         fontFamily: "Inter, Arial, sans-serif",

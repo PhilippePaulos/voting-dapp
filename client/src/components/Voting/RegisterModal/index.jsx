@@ -7,6 +7,7 @@ import { theme } from '../../theme/theme';
 
 function RegisterModal(props) {
     const { open, handleClose, handleSubmit, onInputChange, addressError } = props
+    
     return (
         <CenteredModal
             open={open}
