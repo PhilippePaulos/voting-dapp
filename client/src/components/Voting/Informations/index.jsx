@@ -34,23 +34,23 @@ const Informations = () => {
 
     const nextSession = async () => {
         switch (currentSession) {
-            case "0":
+            case Sessions.RegisteringVoters:
                 await contract.methods.startProposalsRegistering().send({ from: accounts[0] })
                 setOpen(false)
                 break
-            case "1":
+            case Sessions.ProposalsRegistrationStarted:
                 await contract.methods.endProposalsRegistering().send({ from: accounts[0] })
                 setOpen(false)
                 break
-            case "2":
+            case Sessions.ProposalsRegistrationEnded:
                 await contract.methods.startVotingSession().send({ from: accounts[0] })
                 setOpen(false)
                 break
-            case "3":
+            case Sessions.VotingSessionStarted:
                 await contract.methods.endVotingSession().send({ from: accounts[0] })
                 setOpen(false)
                 break;
-            case "4":
+            case Sessions.VotingSessionEnded:
                 await contract.methods.tallyVotes().send({ from: accounts[0] })
                 setOpen(false)
                 break;

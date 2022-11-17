@@ -1,6 +1,7 @@
 # Voting DApp project
-
 ## Media
+https://app.videas.fr/v/33b4fd10-5123-4b75-a998-bf492451099c/
+
 
 ## General Information
 This project has been done to practice DApp development. The smart contract used is a simple voting contract which allows the owner to manage a voting session. The owner can register addresses and trigger next sessions until the final tally session. The registered addresses can add proposals to the vote session and then vote for one proposal, there is only one winner.

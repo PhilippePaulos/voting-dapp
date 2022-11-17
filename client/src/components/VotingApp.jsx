@@ -11,13 +11,8 @@ function VotingApp() {
     return (
 
         <>
-            {
-                !isRegistered ? <NoticeNotRegistered /> :
-                    <>
-                        <Navbar />
-                        <Voting />
-                    </>
-            }
+            <Navbar />
+            <Voting />
         </>
     )
 }
