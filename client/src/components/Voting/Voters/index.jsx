@@ -7,7 +7,7 @@ import VotingContext from "../../../contexts/VotingContext/VotingContext";
 import AddressAvatar from '../../AddressAvatar';
 import CircularIndeterminate from '../../CircularIndeterminate';
 import { AddressBox, RoundedGrid, TypographyPointer } from '../../styles';
-import { addressPattern, Sessions } from "../common";
+import { addressPattern, Sessions } from "../common/constants";
 import RegisterModal from '../RegisterModal';
 import VotersDialog from './VoterPopover';
 
@@ -121,7 +121,7 @@ function Voters() {
                             <AddressBox
                                 p={1.5}
                                 key={row.address}
-                                sx={{ display: "flex", gap: "5px" }}
+                                sx={{ display: "flex", gap: "5px", cursor: "pointer"}}
                             >
                                 {
                                     row.hasVoted ? <CheckIcon color="success" /> : null

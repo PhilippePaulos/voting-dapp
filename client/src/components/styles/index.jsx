@@ -18,13 +18,14 @@ const RoundedGrid = styled(Grid)({
         justifyContent: "space-between",
         padding: "10px 15px 10px 15px",
         borderColor: theme.palette.border.main,
+        alignSelf:"center"
     },
     "& .MuiTypography-b": {
         color: theme.palette.secondary.main
     },
-    "& .MuiSvgIcon-root:hover": {
-        cursor: "pointer"
-    }
+    // "& .MuiSvgIcon-root:hover": {
+    //     cursor: "pointer"
+    // }
 })
 
 const AddressBox = styled(Box)({

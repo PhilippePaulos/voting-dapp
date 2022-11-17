@@ -22,15 +22,19 @@ function computeAvatarStyle(address) {
 	return {
 		sx: {
 			bgcolor: getColor(address),
-            color: "white",
-            fontWeight: "bold",
-            width: 20, 
-            height: 20
+			color: "white",
+			fontWeight: "bold",
+			width: 20,
+			height: 20
 		},
 	};
 }
-function AddressAvatar({address}) {
-	return <Avatar {...computeAvatarStyle(address)} />
+function AddressAvatar({ address }) {
+	try {
+		return <Avatar {...computeAvatarStyle(address)} />
+	} catch (e) {
+		return <Avatar />
+	}
 }
 
 export default AddressAvatar;

@@ -1,23 +1,24 @@
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Box, Typography } from "@mui/material";
 import { useCallback, useContext, useEffect, useState } from "react";
 import VotingContext from "../../../contexts/VotingContext/VotingContext";
+import AddressAvatar from '../../AddressAvatar';
 import CircularIndeterminate from '../../CircularIndeterminate';
-import { RoundedGrid } from "../../styles";
-import { Sessions } from "../common";
+import { AddressBox, RoundedGrid } from "../../styles";
+import { Sessions } from "../common/constants";
 import SessionModal from '../SessionsModal';
 
 
 const Informations = () => {
     const { state: { contract, accounts },
-        userSettings: { isOwner, isRegistered, currentSession, fetchCurrentSession } } = useContext(VotingContext);
+        userSettings: { isOwner, isRegistered, currentSession, fetchCurrentSession, owner } } = useContext(VotingContext);
     const [open, setOpen] = useState(false);
     const [winner, setWinner] = useState({});
     const [loading, setLoading] = useState(false);
 
     const fetchWinner = useCallback(async () => {
         const winner = await contract.methods.winningProposalID().call();
-        console.log(winner)
         const proposal = await contract.methods.getOneProposal(winner).call({ from: accounts[0] });
         setWinner({ description: proposal.description, voteCount: proposal.voteCount });
     }, [contract, accounts]);
@@ -28,7 +29,7 @@ const Informations = () => {
 
     useEffect(() => {
         if (contract != null) {
-            if(currentSession === Sessions.VotesTallied && isRegistered){
+            if (currentSession === Sessions.VotesTallied && isRegistered) {
                 fetchWinner();
             }
         }
@@ -75,13 +76,28 @@ const Informations = () => {
                 </Box>
                 <Box className="content">
                     <Box className="line">
+                        <Typography variant="b">Contract address</Typography>
+                        <Typography variant="p" fontSize={13} fontWeight="bold" alignSelf="center">{contract.options.address}</Typography>
+                    </Box>
+                    <Box className="line">
+                        <Typography variant="b">Owner</Typography>
+                        <AddressBox
+                            // sx={{cursor: "pointer"}}
+                         >
+                            <AddressAvatar address={owner} >
+                                <PersonOutlineIcon  />
+                            </AddressAvatar>
+                            <Typography variant="p" fontSize={13} fontWeight="bold" alignSelf="center">{owner}</Typography>
+                        </AddressBox>
+                    </Box>
+                    <Box className="line">
                         <Typography variant="b">Current session</Typography>
-                        <Typography variant="p">{currentSession}</Typography>
+                        <Typography variant="p"  fontSize={13} fontWeight="bold" alignSelf="center">{currentSession}</Typography>
                     </Box>
                     {currentSession === Sessions.VotesTallied ?
                         <Box className="line">
                             <Typography variant="b">Winning proposal</Typography>
-                            <Typography variant="p">{winner.description}</Typography>
+                            <Typography variant="p"  fontSize={13} fontWeight="bold" alignSelf="center" >{winner.description}</Typography>
                         </Box> : null}
 
                 </Box>
@@ -90,7 +106,7 @@ const Informations = () => {
                 open={open}
                 setOpen={setOpen}
                 handleSubmit={handleSubmit} />
-            <CircularIndeterminate loading={loading}/>
+            <CircularIndeterminate loading={loading} />
         </>
     )
 }

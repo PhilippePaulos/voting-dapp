@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { SessionCodes } from "../../components/Voting/common";
+import { SessionCodes } from "../../components/Voting/common/constants";
 import useEth from "../EthContext/useEth";
 import VotingContext from "./VotingContext";
 
@@ -7,11 +7,12 @@ function VotingProvider({ children }) {
     const { state, state: { contract, accounts }, dispatch } = useEth();
     
     const [isOwner, setIsOwner] = useState(false);
+    const [owner, setOwner] = useState(null);
     const [isRegistered, setIsRegistered] = useState(false);
     const [hasVoted, setHasVoted] = useState(false);
     const [currentSession, setCurrentSession] = useState(null);
 
-    const fetchOwner = useCallback(async () => {
+    const fetchIsOwner = useCallback(async () => {
         try {
             const owner = await contract.methods.owner().call();
             setIsOwner(owner === accounts[0]);
@@ -35,12 +36,18 @@ function VotingProvider({ children }) {
         }
     }, [accounts, contract]);
 
+    const fetchOwner = useCallback(async () => {
+        const owner = await contract.methods.owner().call();
+        setOwner(owner);
+    }, [contract]);
+
     useEffect(() => {
         if (contract !== null) {
-            fetchOwner();
+            fetchIsOwner();
             fetchVoter();
+            fetchOwner();
         }
-    }, [contract, accounts, fetchOwner, fetchVoter]);
+    }, [contract, accounts, fetchIsOwner, fetchVoter, fetchOwner]);
 
     const fetchCurrentSession = useCallback(async () => {
         const session = await contract.methods.workflowStatus().call();
@@ -59,6 +66,7 @@ function VotingProvider({ children }) {
 
     const userSettings = {
         isOwner,
+        owner,
         isRegistered,
         currentSession,
         fetchCurrentSession,

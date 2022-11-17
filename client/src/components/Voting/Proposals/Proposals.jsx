@@ -11,7 +11,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import VotingContext from "../../../contexts/VotingContext/VotingContext";
 import { RoundedGrid } from "../../styles";
 import { theme } from '../../theme/theme';
-import { Sessions } from '../common';
+import { Sessions } from '../common/constants';
 import AddProposalModal from './AddProposalModal';
 import VoteProposalModal from './VoteProposalModal';
 

@@ -26,7 +26,7 @@ function Navbar() {
                     <Typography variant="h4" fontSize={24}>voting</Typography>
                     {
                         isConnected ?
-                            <AddressBox aria-describedby="connected-address">
+                            <AddressBox aria-describedby="connected-address" >
                                 <AddressAvatar address={accounts[0]}>
                                     <PersonOutlineIcon />
                                 </AddressAvatar>

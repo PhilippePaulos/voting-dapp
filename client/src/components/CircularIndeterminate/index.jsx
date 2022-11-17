@@ -11,7 +11,7 @@ function CircularIndeterminate({ loading }) {
               sx={{
                 color: "white",
                 position: "fixed",
-                left: "67%",
+                left: "50%",
                 top: "23vh",
                 zIndex: "1300",
               }} />

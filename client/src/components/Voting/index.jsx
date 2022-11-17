@@ -6,7 +6,7 @@ import Informations from "./Informations"
 import Voters from "./Voters"
 import NoticeWrongNetwork from "../Notices/NoticeWrongNetwork";
 import NoticeNoArtifact from "../Notices/NoticeNoArtifact";
-import { Sessions } from "./common";
+import { Sessions } from "./common/constants";
 
 function Voting() {
 
@@ -18,7 +18,7 @@ function Voting() {
         <Typography variant="h5">Who's the best guitarist of all time ?</Typography>
       </Grid>
       <Grid container item xs={12} >
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <Box pb={4}>
             <Informations />
           </Box>
