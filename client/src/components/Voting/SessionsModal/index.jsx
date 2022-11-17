@@ -23,7 +23,7 @@ const SessionModal = (props) => {
                 <form noValidate onSubmit={handleSubmit}>
                     <Box p={2} sx={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly", gap: "10px" }}>
                         <Button onClick={handleSubmit} color="action" variant="contained" sx={{ fontWeight: "bold" }}>Yes</Button>
-                        <Button onClick={handleSubmit} color="action" variant="contained" sx={{ fontWeight: "bold" }}>No</Button>
+                        <Button onClick={() => setOpen(false)} color="action" variant="contained" sx={{ fontWeight: "bold" }}>No</Button>
                     </Box>
                 </form>
             </Box>
