@@ -20,10 +20,11 @@ The initial Voting contract has been updated in order to fix a potential issue: 
 The contract is deployed in the Goerli testnet at :
 
 ## Local deployment
+
+### Contract
 You can deploy the contract in your local environment using the following comands:
 ```sh 
-cd truffle
-npm run migrate --network=development
+cd truffle && npm run migrate --network=development
 ```
 
 Make sure that you have a local blockchain running in your machine and feel free to update the truffle-config.js file in order to match your local configuration:
@@ -36,6 +37,11 @@ networks: {
     },
     ...
 }
+```
+
+### Application
+```sh 
+cd client && npm install && npm start
 ```
 
 ## Tests
