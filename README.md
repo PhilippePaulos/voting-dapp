@@ -47,9 +47,8 @@ networks: {
 cd client && npm install && npm start
 ```
 
-## Tests
-#### Gas Reporter
+## Gas Reporter
 ![alt test](https://github.com/PhilippePaulos/voting-dapp/blob/main/truffle/test/gas-reporter.PNG)
 
-#### Coverage
+## Coverage
 ![alt test](https://github.com/PhilippePaulos/voting-dapp/blob/main/truffle/test/coverage.PNG)
