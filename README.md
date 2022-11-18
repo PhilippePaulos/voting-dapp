@@ -2,6 +2,8 @@
 ## Media
 https://app.videas.fr/v/5d5d8c61-929e-4578-91fe-6a360ff12292/
 
+## Website
+https://voting-dapp-zeta.vercel.app/
 
 ## General Information
 This project has been done to practice DApp development. The smart contract used is a simple voting contract which allows the owner to manage a voting session. The owner can register addresses and trigger next sessions until the final tally session. The registered addresses can add proposals to the vote session and then vote for one proposal, there is only one winner.
@@ -20,7 +22,7 @@ This project has been done to practice DApp development. The smart contract used
 * Material UI
 
 ## Contract address
-The contract is deployed in the Goerli testnet at 0xDe9ad3b9E72Ad640eE4057216aF77858B4fa5E8b
+The contract is deployed in the Goerli testnet at 0x5312bB8D0045fF340FAE3b20Fa8138e5B3C1999b
 
 ## Local deployment
 
