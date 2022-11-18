@@ -1,6 +1,6 @@
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Link } from "@mui/material";
 import { useCallback, useContext, useEffect, useState } from "react";
 import VotingContext from "../../../contexts/VotingContext/VotingContext";
 import AddressAvatar from '../../AddressAvatar';
@@ -16,6 +16,7 @@ const Informations = () => {
     const [open, setOpen] = useState(false);
     const [winner, setWinner] = useState({});
     const [loading, setLoading] = useState(false);
+    const contractLink = `https://goerli.etherscan.io/address/${contract.options.address}`
 
     const fetchWinner = useCallback(async () => {
         const winner = await contract.methods.winningProposalID().call();
@@ -77,7 +78,7 @@ const Informations = () => {
                 <Box className="content">
                     <Box className="line">
                         <Typography variant="b">Contract address</Typography>
-                        <Typography variant="p" fontSize={13} fontWeight="bold" alignSelf="center">{contract.options.address}</Typography>
+                        <Link href={contractLink} fontSize={13} fontWeight="bold" alignSelf="center" color="inherit">{contract.options.address}</Link>
                     </Box>
                     <Box className="line">
                         <Typography variant="b">Owner</Typography>
