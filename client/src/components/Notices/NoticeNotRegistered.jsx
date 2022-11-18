@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 function NoticeNotRegistered() {
     return (
       <Typography variant="p">
-        ⚠️ Your are not registered to this voting session.
+        ⚠️ You are not registered to this voting session.
       </Typography>
     );
   }
