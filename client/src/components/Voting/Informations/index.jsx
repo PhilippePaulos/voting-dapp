@@ -63,7 +63,7 @@ const Informations = () => {
     };
 
     const nextSessionIcon =
-        <ArrowCircleRightOutlinedIcon color="text" fontSize="medium" onClick={e => setOpen(true)} />
+        <ArrowCircleRightOutlinedIcon className="admin" color="text" fontSize="medium" onClick={e => setOpen(true)} />
 
     return (
         <>

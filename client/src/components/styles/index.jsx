@@ -23,9 +23,9 @@ const RoundedGrid = styled(Grid)({
     "& .MuiTypography-b": {
         color: theme.palette.secondary.main
     },
-    // "& .MuiSvgIcon-root:hover": {
-    //     cursor: "pointer"
-    // }
+    "& .admin:hover": {
+        cursor: "pointer"
+    }
 })
 
 const AddressBox = styled(Box)({

@@ -2,12 +2,12 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CheckIcon from '@mui/icons-material/Check';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Box, Typography } from '@mui/material';
-import { useCallback, useContext, useEffect, useState } from "react";
-import VotingContext from "../../../contexts/VotingContext/VotingContext";
+import { useCallback, useContext, useEffect, useState } from 'react';
+import VotingContext from '../../../contexts/VotingContext/VotingContext';
 import AddressAvatar from '../../AddressAvatar';
 import CircularIndeterminate from '../../CircularIndeterminate';
 import { AddressBox, RoundedGrid, TypographyPointer } from '../../styles';
-import { addressPattern, Sessions } from "../common/constants";
+import { addressPattern, Sessions } from '../common/constants';
 import RegisterModal from '../RegisterModal';
 import VotersDialog from './VoterPopover';
 
@@ -104,13 +104,13 @@ function Voters() {
     }
 
     const addVoterIcon =
-        <AddCircleIcon color='text' fontSize='medium' onClick={e => setOpen(true)} />
+        <AddCircleIcon color='text' className='admin' fontSize='medium' onClick={e => setOpen(true)} />
 
     return (
         <>
             <RoundedGrid>
                 <Box className='boxHeader'>
-                    <Typography variant="h6">Voters</Typography>
+                    <Typography variant='h6'>Voters</Typography>
                     {
                         !isOwner || currentSession !== Sessions.RegisteringVoters ? null : addVoterIcon
                     }
@@ -121,10 +121,10 @@ function Voters() {
                             <AddressBox
                                 p={1.5}
                                 key={row.address}
-                                sx={{ display: "flex", gap: "5px", cursor: "pointer"}}
+                                sx={{ display: 'flex', gap: '5px', cursor: 'pointer'}}
                             >
                                 {
-                                    row.hasVoted ? <CheckIcon color="success" /> : null
+                                    row.hasVoted ? <CheckIcon color='success' /> : null
                                 }
 
                                 <AddressAvatar address={row.address}>
@@ -133,7 +133,7 @@ function Voters() {
                                 <TypographyPointer
                                     variant='p'
                                     fontSize={13}
-                                    fontWeight="bold"
+                                    fontWeight='bold'
                                     onClick={e => onMouseEnterVoter(e, row.address)}
                                     onMouseOut={e => handleVoterPopoverClose(e)}
                                     >

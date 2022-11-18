@@ -7,17 +7,17 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { useCallback, useContext, useEffect, useState } from "react";
-import VotingContext from "../../../contexts/VotingContext/VotingContext";
-import { RoundedGrid } from "../../styles";
+import { useCallback, useContext, useEffect, useState } from 'react';
+import VotingContext from '../../../contexts/VotingContext/VotingContext';
+import { RoundedGrid } from '../../styles';
 import { theme } from '../../theme/theme';
 import { Sessions } from '../common/constants';
 import AddProposalModal from './AddProposalModal';
 import VoteProposalModal from './VoteProposalModal';
 
 const TableBodyStyled = styled(TableBody)({
-    "tr:last-child td": {
-        border: "none"
+    'tr:last-child td': {
+        border: 'none'
     }
 });
 
@@ -30,7 +30,7 @@ function VoteTableCell(props) {
         <TableCell
             style={
                 {
-                    cursor: condition ? "pointer" : "default"
+                    cursor: condition ? 'pointer' : 'default'
                 }}
             key={column.id}
             align={column.align}
@@ -65,7 +65,7 @@ function Proposals() {
 
         const retrievedProposal = (event) => {
             const proposalId = event.returnValues.proposalId;
-            console.log("new proposalsId:", proposalId);
+            console.log('new proposalsId:', proposalId);
             return contract.methods.getOneProposal(proposalId).call({ from: accounts[0] })
                 .then((proposal) => {
                     return Object.assign({}, proposal, { proposalId: proposalId })
@@ -94,23 +94,24 @@ function Proposals() {
 
     const addProposalIcon =
         <AddCircleIcon
-            color="text"
-            fontSize="medium"
+            color='text'
+            className='admin'
+            fontSize='medium'
             onClick={e => setOpenProposalModal(true)}
         />
 
     return (
         <>
             <RoundedGrid>
-                <Box className="boxHeader">
-                    <Typography variant="h6">Proposals</Typography>
+                <Box className='boxHeader'>
+                    <Typography variant='h6'>Proposals</Typography>
                     {
                         currentSession !== Sessions.ProposalsRegistrationStarted || !isRegistered ? null : addProposalIcon
                     }
                 </Box>
-                <Paper sx={{ width: '100%', backgroundColor: theme.palette.background.grid, marginBottom: "10px", boxShadow: "none" }}>
+                <Paper sx={{ width: '100%', backgroundColor: theme.palette.background.grid, marginBottom: '10px', boxShadow: 'none' }}>
                     <TableContainer sx={{ maxHeight: 600 }}>
-                        <Table stickyHeader aria-label="sticky table" >
+                        <Table stickyHeader aria-label='sticky table' >
                             <TableHead>
                                 <TableRow>
                                     {columns.map((column) => (
@@ -130,10 +131,10 @@ function Proposals() {
                                         return (
 
                                             <TableRow
-                                                role="checkbox"
+                                                role='checkbox'
                                                 tabIndex={-1}
                                                 key={row.proposalId}
-                                                sx={{ '&:hover': { background: currentSession === Sessions.VotingSessionStarted ? theme.palette.background.pop : "inherit" } }}>
+                                                sx={{ '&:hover': { background: currentSession === Sessions.VotingSessionStarted ? theme.palette.background.pop : 'inherit' } }}>
                                                 {columns.map((column) => {
                                                     const value = row[column.id];
                                                     return (
