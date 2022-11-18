@@ -3,18 +3,27 @@ pragma solidity 0.8.17;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+/*
+ * @author Philippe Paulos
+ * @notice Voting contract
+ 
+ * This contract is used to manage a voting session, allowing people to propose and vote for ideas
+ * The session is managed by the owner of the contract
+ */
 contract Voting is Ownable {
-    uint256 public winningProposalID;
+    uint8 public winningProposalID;
+    uint8 numProposals;
+    Proposal[100] proposalsArray;
 
     struct Voter {
         bool isRegistered;
         bool hasVoted;
-        uint256 votedProposalId;
+        uint8 votedProposalId;
     }
 
     struct Proposal {
         string description;
-        uint256 voteCount;
+        uint8 voteCount;
     }
 
     enum WorkflowStatus {
@@ -27,8 +36,6 @@ contract Voting is Ownable {
     }
 
     WorkflowStatus public workflowStatus;
-    Proposal[100] proposalsArray;
-    uint8 numProposals;
     mapping(address => Voter) voters;
 
     event VoterRegistered(address voterAddress);
@@ -36,18 +43,23 @@ contract Voting is Ownable {
         WorkflowStatus previousStatus,
         WorkflowStatus newStatus
     );
-    event ProposalRegistered(uint256 proposalId);
-    event Voted(address voter, uint256 proposalId);
+    event ProposalRegistered(uint8 proposalId);
+    event Voted(address voter, uint8 proposalId);
 
     modifier onlyVoters() {
         require(voters[msg.sender].isRegistered, "You're not a voter");
         _;
     }
 
-    // on peut faire un modifier pour les états
-
-    // ::::::::::::: GETTERS ::::::::::::: //
-
+    /**
+     * @dev Gets the Voter struct of a given `_addr`
+     * @param _addr searched address
+     * @return Voter
+     *
+     * Requirements:
+     *
+     * - `address` cannot be a non voter
+     */
     function getVoter(address _addr)
         external
         view
@@ -57,7 +69,16 @@ contract Voting is Ownable {
         return voters[_addr];
     }
 
-    function getOneProposal(uint256 _id)
+    /**
+     * @dev Gets the Proposal struct for a given `_id`
+     * @param _id searched `proposalId`
+     * @return Proposal
+     *
+     * Requirements:
+     *
+     * - `address` cannot be a non voter
+     */
+    function getOneProposal(uint8 _id)
         external
         view
         onlyVoters
@@ -66,8 +87,19 @@ contract Voting is Ownable {
         return proposalsArray[_id];
     }
 
-    // ::::::::::::: REGISTRATION ::::::::::::: //
-
+    /**
+     * @dev Adds a new voter `_addr` to the session
+     * @param _addr address to register
+     *
+     *
+     * Emits a {VoterRegistered} event.
+     *
+     * Requirements:
+     *
+     * - `address` cannot be already registered
+     * - `msg.sender` should be the owner
+     * - `worklowStatus` should be WorkflowStatus.RegisteringVoters
+     */
     function addVoter(address _addr) external onlyOwner {
         require(
             workflowStatus == WorkflowStatus.RegisteringVoters,
@@ -79,8 +111,18 @@ contract Voting is Ownable {
         emit VoterRegistered(_addr);
     }
 
-    // ::::::::::::: PROPOSAL ::::::::::::: //
-
+    /**
+     * @dev Adds a proposal named `desc` to the session
+     * @param _desc description of the new proposal
+     *
+     * Emits a {ProposalRegistered} event.
+     *
+     * Requirements:
+     *
+     * - `_desc` cannot be empty
+     * - `msg.sender` should be a voter
+     * - `worklowStatus` should be WorkflowStatus.ProposalsRegistrationStarted
+     */
     function addProposal(string calldata _desc) external onlyVoters {
         require(
             workflowStatus == WorkflowStatus.ProposalsRegistrationStarted,
@@ -99,9 +141,20 @@ contract Voting is Ownable {
         emit ProposalRegistered(numProposals - 1);
     }
 
-    // ::::::::::::: VOTE ::::::::::::: //
-
-    function setVote(uint256 _id) external onlyVoters {
+    /**
+     * @dev Vote for an existing `_id`
+     * @param _id `proposalId` to vote for
+     *
+     * Emits a {Voted} event.
+     *
+     * Requirements:
+     *
+     * - `_id` should exists
+     * - `msg.sender` should be a voter
+     * - `worklowStatus` should be WorkflowStatus.VotingSessionStarted
+     * - `msg.sender` should be owner
+     */
+    function setVote(uint8 _id) external onlyVoters {
         require(
             workflowStatus == WorkflowStatus.VotingSessionStarted,
             "Voting session havent started yet"
@@ -116,8 +169,16 @@ contract Voting is Ownable {
         emit Voted(msg.sender, _id);
     }
 
-    // ::::::::::::: STATE ::::::::::::: //
-
+    /**
+     * @dev Sets the `workflowStatus` to `ProposalsRegistrationStarted`
+     *
+     * Emits a {WorkflowStatusChange} event.
+     *
+     * Requirements:
+     *
+     * - `workflowStatus` should be WorkflowStatus.RegisteringVoters
+     * - `msg.sender` should be owner
+     */
     function startProposalsRegistering() external onlyOwner {
         require(
             workflowStatus == WorkflowStatus.RegisteringVoters,
@@ -136,6 +197,16 @@ contract Voting is Ownable {
         );
     }
 
+    /**
+     * @dev Sets the `workflowStatus` to `ProposalsRegistrationEnded`
+     *
+     * Emits a {WorkflowStatusChange} event.
+     *
+     * Requirements:
+     *
+     * - `workflowStatus` should be WorkflowStatus.ProposalsRegistrationStarted
+     * - `msg.sender` should be owner
+     */
     function endProposalsRegistering() external onlyOwner {
         require(
             workflowStatus == WorkflowStatus.ProposalsRegistrationStarted,
@@ -148,6 +219,16 @@ contract Voting is Ownable {
         );
     }
 
+    /**
+     * @dev Sets the `workflowStatus` to `VotingSessionStarted`
+     *
+     * Emits a {WorkflowStatusChange} event.
+     *
+     * Requirements:
+     *
+     * - `workflowStatus` should be WorkflowStatus.ProposalsRegistrationEnded
+     * - `msg.sender` should be owner
+     */
     function startVotingSession() external onlyOwner {
         require(
             workflowStatus == WorkflowStatus.ProposalsRegistrationEnded,
@@ -160,6 +241,16 @@ contract Voting is Ownable {
         );
     }
 
+    /**
+     * @dev Sets the `workflowStatus` to `VotingSessionEnded`
+     *
+     * Emits a {WorkflowStatusChange} event.
+     *
+     * Requirements:
+     *
+     * - `workflowStatus` should be WorkflowStatus.VotingSessionStarted
+     * - `msg.sender` should be owner
+     */
     function endVotingSession() external onlyOwner {
         require(
             workflowStatus == WorkflowStatus.VotingSessionStarted,
@@ -172,14 +263,27 @@ contract Voting is Ownable {
         );
     }
 
+    /**
+     * @dev Tally the winner setting the `winningProposalId`
+     *
+     * Emits a {WorkflowStatusChange} event.
+     *
+     * Requirements:
+     *
+     * - `workflowStatus` should be WorkflowStatus.VotingSessionEnded
+     * - `msg.sender` should be owner
+     */
     function tallyVotes() external onlyOwner {
         require(
             workflowStatus == WorkflowStatus.VotingSessionEnded,
             "Current status is not voting session ended"
         );
-        uint256 _winningProposalId;
-        for (uint256 p = 0; p < numProposals; p++) {
-            if (proposalsArray[p].voteCount > proposalsArray[_winningProposalId].voteCount) {
+        uint8 _winningProposalId;
+        for (uint8 p = 0; p < numProposals; p++) {
+            if (
+                proposalsArray[p].voteCount >
+                proposalsArray[_winningProposalId].voteCount
+            ) {
                 _winningProposalId = p;
             }
         }

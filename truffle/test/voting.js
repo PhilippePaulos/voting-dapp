@@ -508,4 +508,21 @@ contract("Voting - tallyVotes", accounts => {
 
         await expectRevert(this.voting.tallyVotes({ from: this.owner }), "Current status is not voting session ended");
     });
+    
 });
+
+
+// for v2 after alyra notation
+// contract("Voting - transferOwnership", accounts => {
+
+//     before(async function () {
+//         this.voting = await Voting.new();
+//     });
+
+//     it("sets the owner to the caller", async function () {
+//         await this.voting.transferOwnership({from: accounts[1]}) ;
+//         const owner = await this.voting.owner();
+//         expect(owner).to.be.equal(accounts[1]);
+//     });
+
+// });
