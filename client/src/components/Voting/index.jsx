@@ -1,12 +1,11 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { useContext } from "react";
 import VotingContext from "../../contexts/VotingContext/VotingContext";
-import Proposals from "./Proposals/Proposals";
-import Informations from "./Informations"
-import Voters from "./Voters"
 import NoticeWrongNetwork from "../Notices/NoticeWrongNetwork";
-import NoticeNoArtifact from "../Notices/NoticeNoArtifact";
 import { Sessions } from "./common/constants";
+import Informations from "./Informations";
+import Proposals from "./Proposals/Proposals";
+import Voters from "./Voters";
 
 function Voting() {
 
@@ -40,7 +39,7 @@ function Voting() {
   return (
     <Grid container sx={{ mx: "auto", maxWidth: "1200px" }}>
       {
-        !artifact ? <NoticeNoArtifact /> :
+        !artifact ? <NoticeWrongNetwork /> :
           !contract ? <NoticeWrongNetwork /> :
             voting
       }
