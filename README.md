@@ -18,7 +18,7 @@ This project has been done to practice DApp development. The smart contract used
 [Voting.md](https://github.com/PhilippePaulos/voting-dapp/blob/main/client/src/contracts/Voting.md)
 
 ### Contract address
-The contract is deployed in the Goerli testnet at 0x5312bB8D0045fF340FAE3b20Fa8138e5B3C1999b
+The contract is deployed in the Goerli testnet at [0x5312bB8D0045fF340FAE3b20Fa8138e5B3C1999b](https://goerli.etherscan.io/address/0x5312bB8D0045fF340FAE3b20Fa8138e5B3C1999b)
 
 ## Technologies
 * Solidity
