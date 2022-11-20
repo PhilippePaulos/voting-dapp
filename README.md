@@ -8,10 +8,17 @@ https://voting-dapp-zeta.vercel.app/
 ## General Information
 This project has been done to practice DApp development. The smart contract used is a simple voting contract which allows the owner to manage a voting session. The owner can register addresses and trigger next sessions until the final tally session. The registered addresses can add proposals to the vote session and then vote for one proposal, there is only one winner.
 
-## Contract Improvements
+## Voting contract
+### Improvements
 * The initial Voting contract has been updated in order to fix a potential issue: the proposal amount is now limited to one hundred instead of an unlimited size that could lead to a DOS memory attack.
 * Change the uint256 type to uint8 for the proposal id as we don't have as the maximum amount of proposals is 100
 * Use of variable packing to optimize the contract slots used
+
+### Docs
+https://voting-dapp-zeta.vercel.app/
+
+### Contract address
+The contract is deployed in the Goerli testnet at 0x5312bB8D0045fF340FAE3b20Fa8138e5B3C1999b
 
 ## Technologies
 * Solidity
@@ -20,9 +27,6 @@ This project has been done to practice DApp development. The smart contract used
 * React
 * Web3
 * Material UI
-
-## Contract address
-The contract is deployed in the Goerli testnet at 0x5312bB8D0045fF340FAE3b20Fa8138e5B3C1999b
 
 ## Local deployment
 
@@ -52,5 +56,3 @@ cd client && npm install && npm start
 ## Gas Reporter
 ![alt test](https://github.com/PhilippePaulos/voting-dapp/blob/main/truffle/test/gas-reporter.PNG)
 
-## Coverage
-![alt test](https://github.com/PhilippePaulos/voting-dapp/blob/main/truffle/test/coverage.PNG)
