@@ -6,7 +6,7 @@ function NoticeNotRegistered({ registered }) {
       {
         !registered ?
           <Typography variant="p">
-            ⚠️ You are not registered to this voting session: you can't access to session information.
+            ⚠️ You are not registered in the current session: you can't access to session information.
           </Typography>
           : null
       }
